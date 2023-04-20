@@ -1,25 +1,21 @@
 pipeline {
-   agent any
-
+    agent none
     stages {
-        
-        stage ('Build frontend'){
+        stage('Back-end') {
+            agent {
+                docker { image 'python:3' }
+            }
             steps {
-                echo "Building frontend Code...."
-                // script {
-                //     sh "Building Frontend Code"
-                // }
+                sh 'python -V'
             }
         }
-
-        stage ('Build backend'){
+        stage('Front-end') {
+            agent {
+                docker { image 'node:16.13.1-alpine' }
+            }
             steps {
-                 echo "Building frontend Code...."
-                // script {
-                //     sh "Building Backend Code"
-                // }
+                sh 'node --version'
             }
         }
     }
-
 }
