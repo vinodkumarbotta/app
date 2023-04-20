@@ -5,17 +5,19 @@ pipeline {
         
         stage ('Build frontend'){
             steps {
-                script {
-                    sh "Building Frontend Code"
-                }
+                echo "Building frontend Code...."
+                // script {
+                //     sh "Building Frontend Code"
+                // }
             }
         }
 
         stage ('Build backend'){
             steps {
-                script {
-                    sh "Building Backend Code"
-                }
+                 echo "Building frontend Code...."
+                // script {
+                //     sh "Building Backend Code"
+                // }
             }
         }
     }
