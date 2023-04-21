@@ -7,8 +7,12 @@ pipeline {
             }
         }
         stage('Front-end') {
+            environment {
+                NODEJS_HOME = tool name: 'npmpkg', type: 'nodejs'
+            }
             steps {
-                sh 'node --version'
+                sh "${NODEJS_HOME}/bin/node --version"
+                sh "${NODEJS_HOME}/bin/npm --version"
             }
         }
     }
