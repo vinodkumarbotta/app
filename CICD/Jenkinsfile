@@ -9,7 +9,6 @@ pipeline {
                             echo 'Installing dependencies...'
                             sh """rm -rf node_modules package-lock.json && npm install
                                   npm install -g lighthouse
-                                  lighthouse --help
                             """
                         }
                     }
@@ -84,6 +83,21 @@ pipeline {
         //         }
         //     }
         // }
+
+        stage('Deploy app Dev') {
+            steps {
+                echo "Deploying into Dev Evnironment"
+            }
+        }
+
+        stage('Run Lighthouse on Dev') {
+            steps {
+                sh """ lighthouse http://google.com --output html --output-path ./report.html
+                       ls -lrt 
+                """
+            }
+        }
+
         
     }
     post {
