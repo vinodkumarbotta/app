@@ -2,7 +2,7 @@ pipeline {
     agent any
     stages {
 
-        stage('Build Frontend'){
+        // stage('Build Frontend'){
             // parallel {
                 stage('Install dependencies') {
                     steps {
@@ -35,7 +35,7 @@ pipeline {
                 }
             // }
 
-        }
+        // }
         stage('Build Backend') {
             steps {
                 dir('frontend'){ 
