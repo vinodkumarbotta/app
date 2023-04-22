@@ -22,11 +22,10 @@ pipeline {
                 // }
                 stage('Frontend Code Analysis') {
                     steps {
-                        
-                        def SONAR_SCANNER_HOME = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                        def scannerHome = tool 'sonar-scanner'
                         dir('frontend'){ 
                             sh """
-                               ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
+                               ${scannerHome}/bin/sonar-scanner \
                                 -Dsonar.organization=app-test-demo \
                                 -Dsonar.projectKey=app-test-proj-frontend \
                                 -Dsonar.sources=. \
