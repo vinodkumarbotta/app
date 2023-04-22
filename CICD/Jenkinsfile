@@ -2,8 +2,7 @@ pipeline {
     agent any
     stages {
 
-        // stage('Build Frontend'){
-            // parallel {
+       
                 stage('Install dependencies') {
                     steps {
                         dir('frontend'){ 
@@ -21,9 +20,11 @@ pipeline {
                 //     }
                 // }
                 stage('Frontend Code Analysis') {
+                    environment {
+                        scannerHome = tool 'sonar-scanner'
+                    }
                     steps {
                         dir('frontend'){ 
-                            def scannerHome = tool 'sonar-scanner'
                             sh """
                                ${scannerHome}/bin/sonar-scanner \
                                 -Dsonar.organization=app-test-demo \
@@ -49,9 +50,6 @@ pipeline {
                         }
                     }
                 }
-            // }
-
-        // }
         stage('Build Backend') {
             steps {
                 dir('frontend'){ 
