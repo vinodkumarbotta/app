@@ -95,8 +95,12 @@ pipeline {
             steps {
                 sh """ 
                 apk add --no-cache  chromium --repository=http://dl-cdn.alpinelinux.org/alpine/v3.10/main
-                lighthouse http://www.lighttpd.net/ --output html --output-path ./report.html
-                ls -lrt 
+                
+                lighthouse --quiet --no-update-notifier --no-enable-error-reporting \
+                --output-path ./report.html \
+                --no-sandbox=true \
+                --output=html --chrome-flags="--headless" http://www.lighttpd.net
+                ls -lrt
                 """
             }
         }
