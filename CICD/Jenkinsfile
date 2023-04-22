@@ -19,9 +19,10 @@ pipeline {
                         
                 //     }
                 // }
-                stage('Frontend Code Analysis') {
+                stage('Frontend Sonar Code Analysis') {
                     environment {
                         scannerHome = tool 'sonar-scanner'
+                        SONAR_TOKEN = "d398500f8060e9da54ca5f802eb0cc5750f1ad13"
                     }
                     steps {
                         dir('frontend'){ 
@@ -32,6 +33,7 @@ pipeline {
                                 -Dsonar.sources=. \
                                 -Dsonar.token=d398500f8060e9da54ca5f802eb0cc5750f1ad13 \
                                 -Dsonar.host.url=https://sonarcloud.io 
+                                -Dsonar.verbose=true
                                 
                             """
                         }
