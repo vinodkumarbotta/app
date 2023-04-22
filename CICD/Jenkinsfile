@@ -96,10 +96,7 @@ pipeline {
                 sh """ 
                 apk add --no-cache  chromium --repository=http://dl-cdn.alpinelinux.org/alpine/v3.10/main
                 
-                CHROME_PATH=/usr/bin/chromium-browser lighthouse --quiet --no-update-notifier --no-enable-error-reporting \
-                --output-path ./report.html \
-                --no-sandbox=false \
-                --output=html --chrome-flags="--headless" http://www.lighttpd.net
+                lighthouse  --chrome-flags="--headless" --quiet --view--output html  --output-path ./report.html http://www.lighttpd.net
                 ls -lrt
                 """
             }
