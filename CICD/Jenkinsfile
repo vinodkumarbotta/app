@@ -3,7 +3,7 @@ pipeline {
     stages {
 
         stage('Build Frontend'){
-            parallel {
+            // parallel {
                 stage('Install dependencies') {
                     steps {
                         dir('frontend'){ 
@@ -33,7 +33,7 @@ pipeline {
                         }
                     }
                 }
-            }
+            // }
 
         }
         stage('Build Backend') {
