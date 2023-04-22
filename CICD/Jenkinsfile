@@ -1,14 +1,14 @@
 pipeline {
     agent any
     stages {
-        stage('Front-end') {
+        stage('Build Frontend') {
             steps {
                 dir('frontend'){ 
-                   sh "ls -lrt"
+                   sh "npm install"
                 }
             }
         }
-        stage('Back-end') {
+        stage('Build Backend') {
             steps {
                 dir('frontend'){ 
                    sh "ls -lrt"
