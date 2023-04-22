@@ -96,7 +96,7 @@ pipeline {
                 sh """ 
                 apk add --no-cache  chromium --repository=http://dl-cdn.alpinelinux.org/alpine/v3.10/main
                 
-                lighthouse  --chrome-flags="--headless" --quiet --view--output html  --output-path ./report.html http://www.lighttpd.net
+                lighthouse  --output html  --output-path ./report.html http://www.lighttpd.net
                 ls -lrt
                 """
             }
