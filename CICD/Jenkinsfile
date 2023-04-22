@@ -9,6 +9,7 @@ pipeline {
                             echo 'Installing dependencies...'
                             sh """rm -rf node_modules package-lock.json && npm install
                                   npm install -g lighthouse
+                                  npm install -g chrome-launcher
                             """
                         }
                     }
