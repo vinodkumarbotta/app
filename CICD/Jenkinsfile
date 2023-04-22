@@ -3,17 +3,17 @@ pipeline {
     stages {
 
        
-                stage('Install frontend dependencies') {
-                    steps {
-                        dir('frontend'){ 
-                            echo 'Installing dependencies...'
-                            sh """rm -rf node_modules package-lock.json && npm install
-                                  npm install -g lighthouse
-                                  npm install -g chrome-launcher
-                            """
-                        }
-                    }
-                }            
+                // stage('Install frontend dependencies') {
+                //     steps {
+                //         dir('frontend'){ 
+                //             echo 'Installing dependencies...'
+                //             sh """rm -rf node_modules package-lock.json && npm install
+                //                   npm install -g lighthouse
+                //                   npm install -g chrome-launcher
+                //             """
+                //         }
+                //     }
+                // }            
                 // stage('Build') {
                 //     steps {
                 //         dir('frontend'){ 
@@ -70,13 +70,13 @@ pipeline {
                 //         }
                 //     }
                 // }
-        stage('Install backend dependencies') {
-            steps {
-                dir('backend'){ 
-                   sh "python3 -m pip install -r package-lock.txt"
-                }
-            }
-        }
+        // stage('Install backend dependencies') {
+        //     steps {
+        //         dir('backend'){ 
+        //            sh "python3 -m pip install -r package-lock.txt"
+        //         }
+        //     }
+        // }
         // stage('Build backend dependencies') {
         //     steps {
         //         dir('backend'){ 
