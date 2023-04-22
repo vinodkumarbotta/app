@@ -93,12 +93,14 @@ pipeline {
 
         stage('Run Lighthouse on Dev') {
             steps {
-                sh """ 
-                apk add --no-cache  chromium --repository=http://dl-cdn.alpinelinux.org/alpine/v3.10/main
+                // sh """ 
+                // apk add --no-cache  chromium --repository=http://dl-cdn.alpinelinux.org/alpine/v3.10/main
                 
-                lighthouse  --output html  --output-path ./report.html http://www.lighttpd.net
-                ls -lrt
-                """
+                // lighthouse  --output html  --output-path ./report.html http://www.lighttpd.net
+                // ls -lrt
+                // """
+                sh 'npx lighthouse-ci http://www.lighttpd.net--jsonReport --report=.'
+                lighthouseReport file: './report.json', name: 'MyLighthouseReport'
             }
         }
 
