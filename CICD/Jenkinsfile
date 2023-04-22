@@ -20,6 +20,24 @@ pipeline {
                         
                 //     }
                 // }
+                stage('Frontend Code Analysis') {
+                    steps {
+                        environment {
+                            def SONAR_SCANNER_HOME = tool name: 'sonar-scanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                        }
+                        dir('frontend'){ 
+                            sh """
+                               ${SONAR_SCANNER_HOME}/bin/sonar-scanner \
+                                -Dsonar.organization=app-test-demo \
+                                -Dsonar.projectKey=app-test-proj-frontend \
+                                -Dsonar.sources=. \
+                                -Dsonar.host.url=https://sonarcloud.io \
+                                -Dsonar.token=d398500f8060e9da54ca5f802eb0cc5750f1ad13
+                            """
+                        }
+                        
+                    }
+                }
                 stage ('Static Analysis') {
                     steps {
                         dir('frontend'){ 
