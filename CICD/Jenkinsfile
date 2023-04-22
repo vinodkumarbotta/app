@@ -92,8 +92,10 @@ pipeline {
 
         stage('Run Lighthouse on Dev') {
             steps {
-                sh """ lighthouse http://www.lighttpd.net/ --output html --output-path ./report.html
-                       ls -lrt 
+                sh """ 
+                apk add --no-cache  chromium --repository=http://dl-cdn.alpinelinux.org/alpine/v3.10/main
+                lighthouse http://www.lighttpd.net/ --output html --output-path ./report.html
+                ls -lrt 
                 """
             }
         }
