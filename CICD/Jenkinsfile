@@ -3,26 +3,26 @@ pipeline {
     stages {
 
        
-                stage('Install dependencies') {
-                    steps {
-                        dir('frontend'){ 
-                            echo 'Installing dependencies...'
-                            sh """rm -rf node_modules package-lock.json && npm install
-                                  npm install -g lighthouse
-                                  lighthouse --help
-                            """
-                        }
-                    }
-                }            
-                stage('Build') {
-                    steps {
-                        dir('frontend'){ 
-                            // sh 'npm run build'
-                            echo "Build code"
-                        }
+                // stage('Install frontend dependencies') {
+                //     steps {
+                //         dir('frontend'){ 
+                //             echo 'Installing dependencies...'
+                //             sh """rm -rf node_modules package-lock.json && npm install
+                //                   npm install -g lighthouse
+                //                   lighthouse --help
+                //             """
+                //         }
+                //     }
+                // }            
+                // stage('Build') {
+                //     steps {
+                //         dir('frontend'){ 
+                //             // sh 'npm run build'
+                //             echo "Build code"
+                //         }
                         
-                    }
-                }
+                //     }
+                // }
                 // stage('Frontend Sonar Code Analysis') {
                 //     environment {
                 //         scannerHome = tool 'sonar-scanner'
@@ -55,25 +55,32 @@ pipeline {
                        
                 //     }
                 // }
-                stage ('Static Analysis') {
-                    steps {
-                        dir('frontend'){ 
-                            sh """ ./node_modules/eslint/bin/eslint.js -f checkstyle src > eslint.xml
-                                   ls -lrt 
-                            """
-                        }
+                // stage ('Static Analysis') {
+                //     steps {
+                //         dir('frontend'){ 
+                //             sh """ ./node_modules/eslint/bin/eslint.js -f checkstyle src > eslint.xml
+                //                    ls -lrt 
+                //             """
+                //         }
                         
-                    }
-                    post {
-                        always {
-                            recordIssues enabledForFailure: true, aggregatingResults: true, tool: checkStyle(pattern: 'frontend/eslint.xml')
-                        }
-                    }
-                }
-        stage('Build Backend') {
+                //     }
+                //     post {
+                //         always {
+                //             recordIssues enabledForFailure: true, aggregatingResults: true, tool: checkStyle(pattern: 'frontend/eslint.xml')
+                //         }
+                //     }
+                // }
+        stage('Install backend dependencies') {
             steps {
                 dir('backend'){ 
-                   sh "ls -lrt"
+                   sh "python3 -m pip install -r package-lock.txt"
+                }
+            }
+        }
+        stage('Build backend dependencies') {
+            steps {
+                dir('backend'){ 
+                   sh "ppm install"
                 }
             }
         }
