@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  jenkins:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    privileged: true
+    user: root
+    ports:
+      - 8080:8080
+      - 50000:50000
+    container_name: jenkins
+    volumes:
+      - jenkins_data:/var/jenkins_home
+      - docker_sock_data:/var/run/docker.sock
+      - docker_data:/usr/local/bin/docker
+volumes:
+  jenkins_data:
+  docker_sock_data:
+  docker_data: 
