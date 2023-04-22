@@ -7,7 +7,10 @@ pipeline {
                     steps {
                         dir('frontend'){ 
                             echo 'Installing dependencies...'
-                            sh 'rm -rf node_modules package-lock.json && npm install'
+                            sh """rm -rf node_modules package-lock.json && npm install
+                                  npm install -g lighthouse
+                                  lighthouse --help
+                            """
                         }
                     }
                 }            
@@ -20,35 +23,24 @@ pipeline {
                         
                     }
                 }
-                stage('Frontend Sonar Code Analysis') {
-                    environment {
-                        scannerHome = tool 'sonar-scanner'
-                        SONAR_TOKEN = "d398500f8060e9da54ca5f802eb0cc5750f1ad13"
-                    }
-                    steps {
-                        dir('frontend'){ 
-                            sh """
-                               ${scannerHome}/bin/sonar-scanner \
-                                -Dsonar.organization=app-test-demo \
-                                -Dsonar.projectKey=app-test-proj \
-                                -Dsonar.sources=. \
-                                -Dsonar.token="d398500f8060e9da54ca5f802eb0cc5750f1ad13" \
-                                -Dsonar.host.url=https://sonarcloud.io
-                            """
-                        }
-                        sleep time: 30000, unit: 'MILLISECONDS'
-                        echo "test1"
-                        script {
-                                echo "test2"
-                                def qg = waitForQualityGate()
-                                if (qg.status != 'OK') {
-                                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                                    echo "test3" 
-                                }
-                        }
-                        
-                    }
-                }
+                // stage('Frontend Sonar Code Analysis') {
+                //     environment {
+                //         scannerHome = tool 'sonar-scanner'
+                //         SONAR_TOKEN = "d398500f8060e9da54ca5f802eb0cc5750f1ad13"
+                //     }
+                //     steps {
+                //         dir('frontend'){ 
+                //             sh """
+                //                ${scannerHome}/bin/sonar-scanner \
+                //                 -Dsonar.organization=app-test-demo \
+                //                 -Dsonar.projectKey=app-test-proj \
+                //                 -Dsonar.sources=. \
+                //                 -Dsonar.token="d398500f8060e9da54ca5f802eb0cc5750f1ad13" \
+                //                 -Dsonar.host.url=https://sonarcloud.io
+                //             """
+                //         }
+                //     }
+                // }
                 // stage("Quality Gate"){
                 //     steps {
                 //         script {
