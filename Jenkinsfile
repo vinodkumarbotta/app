@@ -1,18 +1,21 @@
 pipeline {
     agent any
     stages {
-        stage('Back-end') {
-            steps {
-                sh 'python -V'
-            }
-        }
         stage('Front-end') {
             steps {
-                sh "node --version"
-                // sh "${NODEJS_HOME}/bin/node --version"
-                // sh "${NODEJS_HOME}/bin/npm --version"
+                dir('frontend'){ 
+                   sh "ls -lrt"
+                }
             }
         }
+        stage('Back-end') {
+            steps {
+                dir('frontend'){ 
+                   sh "ls -lrt"
+                }
+            }
+        }
+        
     }
     post {
         always {
