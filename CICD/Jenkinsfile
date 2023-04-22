@@ -9,7 +9,6 @@ pipeline {
                             echo 'Installing dependencies...'
                             sh """rm -rf node_modules package-lock.json && npm install
                                   npm install -g lighthouse
-                                  npm install -g chrome-launcher
                             """
                         }
                     }
@@ -96,7 +95,7 @@ pipeline {
                 sh """ 
                 apk add --no-cache  chromium --repository=http://dl-cdn.alpinelinux.org/alpine/v3.10/main
                 
-                lighthouse --quiet --no-update-notifier --no-enable-error-reporting \
+                CHROME_PATH=/usr/bin/chromium-browser lighthouse --quiet --no-update-notifier --no-enable-error-reporting \
                 --output-path ./report.html \
                 --no-sandbox=false \
                 --output=html --chrome-flags="--headless" http://www.lighttpd.net
