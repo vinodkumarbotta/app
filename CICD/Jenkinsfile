@@ -32,9 +32,7 @@ pipeline {
                                 -Dsonar.projectKey=app-test-proj \
                                 -Dsonar.sources=. \
                                 -Dsonar.token=d398500f8060e9da54ca5f802eb0cc5750f1ad13 \
-                                -Dsonar.host.url=https://sonarcloud.io 
-                                -Dsonar.verbose=true
-                                
+                                -Dsonar.host.url=https://sonarcloud.io
                             """
                         }
                         
