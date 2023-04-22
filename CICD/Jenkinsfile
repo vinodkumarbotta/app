@@ -98,7 +98,7 @@ pipeline {
                 
                 lighthouse --quiet --no-update-notifier --no-enable-error-reporting \
                 --output-path ./report.html \
-                --no-sandbox=true \
+                --no-sandbox=false \
                 --output=html --chrome-flags="--headless" http://www.lighttpd.net
                 ls -lrt
                 """
