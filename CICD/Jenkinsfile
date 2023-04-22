@@ -22,8 +22,8 @@ pipeline {
                 // }
                 stage('Frontend Code Analysis') {
                     steps {
-                        def scannerHome = tool 'sonar-scanner'
                         dir('frontend'){ 
+                            def scannerHome = tool 'sonar-scanner'
                             sh """
                                ${scannerHome}/bin/sonar-scanner \
                                 -Dsonar.organization=app-test-demo \
