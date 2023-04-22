@@ -92,7 +92,7 @@ pipeline {
 
         stage('Run Lighthouse on Dev') {
             steps {
-                sh """ lighthouse http://google.com --output html --output-path ./report.html
+                sh """ lighthouse http://www.lighttpd.net/ --output html --output-path ./report.html
                        ls -lrt 
                 """
             }
