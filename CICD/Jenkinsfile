@@ -43,7 +43,7 @@ pipeline {
                 }
             }
         }
-        stage("Quality Gate"){
+        stage("Quality-Gate-Frontend"){
             steps {
                 script {
                     timeout(time: 1, unit: 'HOURS') {
