@@ -119,7 +119,7 @@ pipeline {
             }
         }
 
-        stage('Run Lighthouse') {
+        stage('Lighthouse') {
             steps {
                 sh 'sudo npx lighthouse-ci https://www.hubler.app --jsonReport --report=.'
                 lighthouseReport file: './report.json', name: 'My Report'
