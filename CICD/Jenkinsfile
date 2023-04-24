@@ -14,15 +14,15 @@ pipeline {
                         }
                     }
                 }            
-                stage('Build') {
-                    steps {
-                        dir('frontend'){ 
-                            // sh 'npm run build'
-                            echo "Build code"
-                        }
+                // stage('Build') {
+                //     steps {
+                //         dir('frontend'){ 
+                //             // sh 'npm run build'
+                //             echo "Build code"
+                //         }
                         
-                    }
-                }
+                //     }
+                // }
                 stage('Frontend Sonar Code Analysis') {
                     environment {
                         scannerHome = tool 'sonar-scanner'
