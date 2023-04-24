@@ -41,7 +41,7 @@ EOF'
 
 #Run Lighthouse CI against the container named lhci
 docker exec -i lhci sh -c \
-'lhci autorun --config="./lhci-config.json" --collect.url='${URL} || true
+'lhci autorun --config="./lhci-config.json" --collect.url='${url} || true
 
 #Copy the results from the container to the host machine
 docker cp lhci:/.lighthouseci ./lhresults/
