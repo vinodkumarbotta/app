@@ -56,7 +56,7 @@ pipeline {
                        
                     }
                 }
-                stage ('Static Analysis') {
+                stage ('ES Linting') {
                     steps {
                         dir('frontend'){ 
                             sh """ ./node_modules/eslint/bin/eslint.js -f checkstyle src > eslint.xml
