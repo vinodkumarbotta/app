@@ -28,13 +28,12 @@ pipeline {
                     }
                     steps {
                         dir('frontend'){ 
-                            withSonarQubeEnv(credentialsId: 'jenkins-sonar-token') {
+                            withSonarQubeEnv('SonarQubeServer') {
                                  sh """
                                ${scannerHome}/bin/sonar-scanner \
                                 -Dsonar.organization=hubler-test-proj \
                                 -Dsonar.projectKey=hubler-test \
                                 -Dsonar.sources=. \
-                                -Dsonar.host.url=http://172.31.12.61:9000
                             """
                             }
                            
