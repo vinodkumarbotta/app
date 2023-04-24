@@ -118,6 +118,13 @@ pipeline {
                 echo "Deploying into Dev Evnironment"
             }
         }
+
+        stage('Run Lighthouse') {
+            steps {
+                sh 'npx lighthouse-ci https://www.hubler.app --jsonReport --report=.'
+                lighthouseReport file: './report.json', name: 'My Report'
+            }
+        }
         
     }
     post {
