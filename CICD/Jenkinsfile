@@ -3,83 +3,106 @@ pipeline {
     stages {
 
        
-                stage('Install frontend dependencies') {
-                    steps {
-                        dir('frontend'){ 
-                            echo 'Installing dependencies...'
-                            sh """rm -rf node_modules package-lock.json && npm install
-                            """
-                        }
-                    }
-                }            
-                stage('Build') {
-                    steps {
-                        dir('frontend'){ 
-                            // sh 'npm run build'
-                            echo "Build code"
-                        }
-                        
-                    }
-                }
-                stage('Sonar Code Analysis') {
-                    environment {
-                        scannerHome = tool 'sonar-scanner'
-                    }
-                    steps {
-                        dir('frontend'){ 
-                            withSonarQubeEnv('SonarQubeServer') {
-                                 sh """
-                               ${scannerHome}/bin/sonar-scanner \
-                                -Dsonar.organization=hubler-test-proj \
-                                -Dsonar.projectKey=hubler-test \
-                                -Dsonar.sources=. \
-                            """
-                            }
-                           
-                        }
-                    }
-                }
-                stage("Quality Gate"){
-                    steps {
-                        script {
-                            timeout(time: 1, unit: 'HOURS') {
-                                def qg = waitForQualityGate()
-                                if (qg.status != 'OK') {
-                                    error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                                }
-                            }
-
-                        }
-                       
-                    }
-                }
-                stage ('ES Linting') {
-                    steps {
-                        dir('frontend'){ 
-                            sh """ ./node_modules/eslint/bin/eslint.js -f checkstyle src > eslint.xml
-                                   ls -lrt 
-                            """
-                        }
-                        
-                    }
-                    post {
-                        always {
-                            recordIssues enabledForFailure: true, aggregatingResults: true, tool: checkStyle(pattern: 'frontend/eslint.xml')
-                        }
-                    }
-                }
-        stage('Install backend dependencies') {
+        stage('Install dependencies') {
             steps {
+                dir('frontend'){ 
+                    echo 'Installing frontend dependencies...'
+                    sh """rm -rf node_modules package-lock.json && npm install
+                    """
+                }
                 dir('backend'){ 
-                   sh "python3 -m pip install -r package-lock.txt"
+                    echo 'Installing backend dependencies...'
+                    sh "python3 -m pip install -r package-lock.txt"
+                }
+            }
+        }            
+        stage('Build') {
+            steps {
+                dir('frontend'){ 
+                    // sh 'npm run build'
+                    echo "Build code"
+                }
+                
+            }
+        }
+        stage('Sonar-Analysis-Frontend') {
+            environment {
+                scannerHome = tool 'sonar-scanner'
+            }
+            steps {
+                dir('frontend'){ 
+                    withSonarQubeEnv('SonarQubeServer') {
+                            sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.organization=hubler-test-proj \
+                        -Dsonar.projectKey=hubler-frontend-test \
+                        -Dsonar.sources=. \
+                    """
+                    }
+                    
                 }
             }
         }
-        stage('Build backend dependencies') {
+        stage("Quality Gate"){
+            steps {
+                script {
+                    timeout(time: 1, unit: 'HOURS') {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
+                    }
+
+                }
+                
+            }
+        }
+        stage ('ES Linting') {
+            steps {
+                dir('frontend'){ 
+                    sh """ ./node_modules/eslint/bin/eslint.js -f checkstyle src > eslint.xml
+                            ls -lrt 
+                    """
+                }
+                
+            }
+            post {
+                always {
+                    recordIssues enabledForFailure: true, aggregatingResults: true, tool: checkStyle(pattern: 'frontend/eslint.xml')
+                }
+            }
+        }
+        
+        stage('Sonar-Analysis-Backend') {
+            environment {
+                scannerHome = tool 'sonar-scanner'
+            }
             steps {
                 dir('backend'){ 
-                   sh "ppm install"
+                    withSonarQubeEnv('SonarQubeServer') {
+                            sh """
+                        ${scannerHome}/bin/sonar-scanner \
+                        -Dsonar.organization=hubler-test-proj \
+                        -Dsonar.projectKey=hubler-backend-test \
+                        -Dsonar.sources=. \
+                    """
+                    }
+                    
                 }
+            }
+        }
+        stage("Quality Gate"){
+            steps {
+                script {
+                    timeout(time: 1, unit: 'HOURS') {
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }
+                    }
+
+                }
+                
             }
         }
 
