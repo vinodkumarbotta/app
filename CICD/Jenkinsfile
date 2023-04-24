@@ -8,7 +8,6 @@ pipeline {
                         dir('frontend'){ 
                             echo 'Installing dependencies...'
                             sh """rm -rf node_modules package-lock.json && npm install
-                                  npm install -g chrome-launcher
                             """
                         }
                     }
@@ -22,7 +21,7 @@ pipeline {
                         
                 //     }
                 // }
-                stage('Frontend Sonar Code Analysis') {
+                stage('Sonar Code Analysis') {
                     environment {
                         scannerHome = tool 'sonar-scanner'
                     }
