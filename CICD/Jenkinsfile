@@ -19,8 +19,7 @@ pipeline {
         stage('Build') {
             steps {
                 dir('frontend'){ 
-                    // sh 'npm run build'
-                    echo "Build code"
+                    sh 'npm run build'
                 }
                 
             }
@@ -91,7 +90,7 @@ pipeline {
                 }
             }
         }
-        stage("Quality Gate"){
+        stage("Quality-Gate-Backend"){
             steps {
                 script {
                     timeout(time: 1, unit: 'HOURS') {
@@ -111,13 +110,6 @@ pipeline {
                 echo "Deploying into Dev Evnironment"
             }
         }
-
-        stage('Run Lighthouse on Dev') {
-            steps {
-               sh "sh CICD/lighthouse.sh http://www.lighttpd.net"
-            }
-        }
-
         
     }
     post {
