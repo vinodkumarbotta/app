@@ -26,18 +26,19 @@ pipeline {
                 stage('Frontend Sonar Code Analysis') {
                     environment {
                         scannerHome = tool 'sonar-scanner'
-                        SONAR_TOKEN = "d398500f8060e9da54ca5f802eb0cc5750f1ad13"
                     }
                     steps {
                         dir('frontend'){ 
-                            sh """
+                            withSonarQubeEnv(credentialsId: 'jenkins-sonar-token') {
+                                 sh """
                                ${scannerHome}/bin/sonar-scanner \
-                                -Dsonar.organization=app-test-demo \
-                                -Dsonar.projectKey=app-test-proj \
+                                -Dsonar.organization=hubler-test-proj \
+                                -Dsonar.projectKey=hubler-test \
                                 -Dsonar.sources=. \
-                                -Dsonar.token="d398500f8060e9da54ca5f802eb0cc5750f1ad13" \
-                                -Dsonar.host.url=https://sonarcloud.io
+                                -Dsonar.host.url=http://172.31.12.61:9000
                             """
+                            }
+                           
                         }
                     }
                 }
