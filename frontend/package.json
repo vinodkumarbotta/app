@@ -17,7 +17,8 @@
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lhci-start": "lhci autorun"
   },
   "eslintConfig": {
     "extends": "react-app"
